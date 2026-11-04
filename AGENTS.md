@@ -1,4 +1,4 @@
-# AGENTS.md
+# AGENSTS.md
 
 # 交通安全知識學習站－AI 開發規則
 
