@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交通安全小測驗</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <h2>交通安全知識學習站</h2>
+        <div>
+            <a href="index.html">首頁</a>
+            <a href="signs.html">交通標誌</a>
+            <a href="pedestrian.html">行人安全</a>
+            <a href="motorcycle.html">機車安全</a>
+            <a href="dangerous-roads.html">危險路口</a>
+            <a href="quiz.html">小測驗</a>
+        </div>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>交通安全知識小測驗</h1>
+    <p>測試你的交通安全觀念，看看自己能答對幾題！</p>
+</section>
+
+<main class="container">
+    <h2>開始挑戰</h2>
+    <div id="quiz">
+        <h3 id="question">題目載入中...</h3>
+        <div id="answers"></div>
+        <p id="result"></p>
+        <button id="next">下一題</button>
+        <p id="score"></p>
+    </div>
+</main>
+
+<footer>
+    <p>交通安全知識學習站｜讓每一次出門都更安全</p>
+</footer>
+
+<script>
+const questions = [
+    {
+        question: "行人過馬路時，應該怎麼做？",
+        answers: ["直接穿越馬路", "走行人穿越道並注意號誌", "邊滑手機邊過馬路"],
+        correct: 1
+    },
+    {
+        question: "騎乘機車時，最重要的安全裝備是什麼？",
+        answers: ["安全帽", "太陽眼鏡", "耳機"],
+        correct: 0
+    },
+    {
+        question: "看到紅燈時，駕駛人應該怎麼做？",
+        answers: ["加速通過", "停車等待", "按喇叭通過"],
+        correct: 1
+    },
+    {
+        question: "行經沒有號誌的路口時，應該怎麼做？",
+        answers: ["減速並注意左右來車", "直接快速通過", "只看前方"],
+        correct: 0
+    },
+    {
+        question: "騎車時可以一邊使用手機嗎？",
+        answers: ["可以", "不可以", "只要速度慢就可以"],
+        correct: 1
+    }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+function showQuestion() {
+    answered = false;
+    document.getElementById("result").textContent = "";
+    document.getElementById("next").style.display = "none";
+
+    const q = questions[current];
+    document.getElementById("question").textContent =
+        (current + 1) + ". " + q.question;
+
+    const area = document.getElementById("answers");
+    area.innerHTML = "";
+
+    q.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.textContent = answer;
+        button.style.margin = "8px";
+        button.onclick = () => checkAnswer(index);
+        area.appendChild(button);
+    });
+
+    document.getElementById("score").textContent =
+        "目前答對：" + score + " 題";
+}
+
+function checkAnswer(selected) {
+    if (answered) return;
+    answered = true;
+
+    if (selected === questions[current].correct) {
+        score++;
+        document.getElementById("result").textContent = "答對了！做得很好！";
+    } else {
+        document.getElementById("result").textContent =
+            "答錯了，正確答案是：" +
+            questions[current].answers[questions[current].correct];
+    }
+
+    document.getElementById("next").style.display = "inline-block";
+    document.getElementById("score").textContent =
+        "目前答對：" + score + " 題";
+}
+
+document.getElementById("next").onclick = () => {
+    current++;
+
+    if (current < questions.length) {
+        showQuestion();
+    } else {
+        document.getElementById("quiz").innerHTML =
+            "<h2>測驗完成！</h2><h3>你答對了 " +
+            score + " / " + questions.length +
+            " 題</h3><p>繼續學習交通安全知識，讓每次出門都更安心！</p>" +
+            '<button onclick="location.reload()">重新測驗</button>';
+    }
+};
+
+showQuestion();
+</script>
+
+</body>
+</html>
