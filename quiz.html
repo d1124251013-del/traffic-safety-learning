@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安全小測驗｜交通安全知識學習站</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+<h1>📝 交通安全小測驗</h1>
+<p>測試看看你的交通安全知識！</p>
+<a href="index.html">回首頁</a>
+</header>
+
+<main>
+<h2>回答以下 5 道題目</h2>
+
+<form id="quiz">
+<section>
+<h3>1. 行人過馬路應該走哪裡？</h3>
+<label><input type="radio" name="q1" value="0"> 隨意穿越馬路</label><br>
+<label><input type="radio" name="q1" value="1"> 行人穿越道</label><br>
+<label><input type="radio" name="q1" value="0"> 車道中央</label>
+</section>
+
+<section>
+<h3>2. 騎乘機車時應該？</h3>
+<label><input type="radio" name="q2" value="1"> 配戴並扣好安全帽</label><br>
+<label><input type="radio" name="q2" value="0"> 不用戴安全帽</label><br>
+<label><input type="radio" name="q2" value="0"> 超速行駛</label>
+</section>
+
+<section>
+<h3>3. 遇到紅燈時應該？</h3>
+<label><input type="radio" name="q3" value="0"> 加速通過</label><br>
+<label><input type="radio" name="q3" value="1"> 停下等待</label><br>
+<label><input type="radio" name="q3" value="0"> 直接迴轉</label>
+</section>
+
+<section>
+<h3>4. 雨天騎車應該？</h3>
+<label><input type="radio" name="q4" value="1"> 減速慢行</label><br>
+<label><input type="radio" name="q4" value="0"> 加速通過</label><br>
+<label><input type="radio" name="q4" value="0"> 急煞車</label>
+</section>
+
+<section>
+<h3>5. 通過路口時應該？</h3>
+<label><input type="radio" name="q5" value="0"> 不用觀察</label><br>
+<label><input type="radio" name="q5" value="1"> 減速並注意左右來車</label><br>
+<label><input type="radio" name="q5" value="0"> 只看前方</label>
+</section>
+
+<button type="button" onclick="checkAnswer()">送出答案</button>
+</form>
+
+<h2 id="result"></h2>
+</main>
+
+<footer>
+<p>交通安全知識學習站｜安全上路，從知識開始！</p>
+</footer>
+
+<script>
+function checkAnswer() {
+  let score = 0;
+
+  for (let i = 1; i <= 5; i++) {
+    const answer = document.querySelector('input[name="q' + i + '"]:checked');
+
+    if (!answer) {
+      alert("請回答全部題目！");
+      return;
+    }
+
+    score += Number(answer.value);
+  }
+
+  document.getElementById("result").textContent =
+    "你的成績是：" + score + " / 5 分！" +
+    (score === 5 ? " 太棒了，交通安全小達人！" : " 繼續學習，安全知識更進步！");
+}
+</script>
+</body>
+</html>
