@@ -9,48 +9,54 @@
 <body>
 <header>
 <h1>📝 交通安全小測驗</h1>
-<p>測試看看你的交通安全知識！</p>
+<p>挑戰你的交通安全知識！</p>
 <a href="index.html">回首頁</a>
 </header>
 
 <main>
-<h2>回答以下 5 道題目</h2>
-
+<h2>交通安全知識挑戰：共 10 題</h2>
 <form id="quiz">
-<section>
-<h3>1. 行人過馬路應該走哪裡？</h3>
-<label><input type="radio" name="q1" value="0"> 隨意穿越馬路</label><br>
-<label><input type="radio" name="q1" value="1"> 行人穿越道</label><br>
-<label><input type="radio" name="q1" value="0"> 車道中央</label>
-</section>
 
-<section>
-<h3>2. 騎乘機車時應該？</h3>
-<label><input type="radio" name="q2" value="1"> 配戴並扣好安全帽</label><br>
-<label><input type="radio" name="q2" value="0"> 不用戴安全帽</label><br>
-<label><input type="radio" name="q2" value="0"> 超速行駛</label>
-</section>
+<script>
+const questions = [
+["行人過馬路應該走哪裡？",
+["行人穿越道","車道中央","任意穿越道路"],0],
+["騎乘機車時，安全帽應該如何配戴？",
+["掛在手把上","戴好並扣緊帽帶","只戴不扣"],1],
+["遇到紅燈時應該怎麼做？",
+["加速通過","停下等待","直接左轉"],1],
+["雨天騎車時應該？",
+["減速慢行","加速通過","突然煞車"],0],
+["看到停車再開標誌時應該？",
+["直接通過","完全停車並確認安全","按喇叭後通過"],1],
+["接近沒有號誌的路口時應該？",
+["加速通過","不必觀察","減速並注意其他車輛"],2],
+["騎車時可以一邊看手機嗎？",
+["可以","不可以","只要速度慢就可以"],1],
+["夜間行走時，穿著什麼較容易被看見？",
+["深色衣物","明亮或反光衣物","完全不需要注意"],1],
+["遇到大型車輛轉彎時，應該？",
+["靠近車身旁邊","保持安全距離並避開視線死角","從內側搶先通過"],1],
+["經過學校附近時，駕駛人應該？",
+["減速並注意學生","加速離開","持續按喇叭"],0]
+];
 
-<section>
-<h3>3. 遇到紅燈時應該？</h3>
-<label><input type="radio" name="q3" value="0"> 加速通過</label><br>
-<label><input type="radio" name="q3" value="1"> 停下等待</label><br>
-<label><input type="radio" name="q3" value="0"> 直接迴轉</label>
-</section>
+const form = document.getElementById("quiz");
 
-<section>
-<h3>4. 雨天騎車應該？</h3>
-<label><input type="radio" name="q4" value="1"> 減速慢行</label><br>
-<label><input type="radio" name="q4" value="0"> 加速通過</label><br>
-<label><input type="radio" name="q4" value="0"> 急煞車</label>
-</section>
-
-<section>
-<h3>5. 通過路口時應該？</h3>
-<label><input type="radio" name="q5" value="0"> 不用觀察</label><br>
-<label><input type="radio" name="q5" value="1"> 減速並注意左右來車</label><br>
-<label><input type="radio" name="q5" value="0"> 只看前方</label>
-</section>
+questions.forEach((q, i) => {
+  const section = document.createElement("section");
+  section.innerHTML = `
+    <h3>${i + 1}. ${q[0]}</h3>
+    ${q[1].map((option, j) => `
+      <label>
+        <input type="radio" name="q${i}" value="${j}">
+        ${option}
+      </label><br>
+    `).join("")}
+  `;
+  form.appendChild(section);
+});
+</script>
 
 <button type="button" onclick="checkAnswer()">送出答案</button>
 </form>
@@ -66,20 +72,29 @@
 function checkAnswer() {
   let score = 0;
 
-  for (let i = 1; i <= 5; i++) {
-    const answer = document.querySelector('input[name="q' + i + '"]:checked');
+  for (let i = 0; i < questions.length; i++) {
+    const answer = document.querySelector(
+      'input[name="q' + i + '"]:checked'
+    );
 
     if (!answer) {
-      alert("請回答全部題目！");
+      alert("還有題目尚未回答，請完成全部 10 題！");
       return;
     }
 
-    score += Number(answer.value);
+    if (Number(answer.value) === questions[i][2]) {
+      score++;
+    }
   }
 
+  let message = score === 10
+    ? "太厲害了！你是交通安全小達人！"
+    : score >= 7
+    ? "表現不錯！繼續保持安全觀念！"
+    : "再多學習交通安全知識，下次會更好！";
+
   document.getElementById("result").textContent =
-    "你的成績是：" + score + " / 5 分！" +
-    (score === 5 ? " 太棒了，交通安全小達人！" : " 繼續學習，安全知識更進步！");
+    "你的成績：" + score + " / 10 分。 " + message;
 }
 </script>
 </body>
